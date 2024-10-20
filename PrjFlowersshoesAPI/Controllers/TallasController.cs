@@ -7,22 +7,52 @@ namespace PrjFlowersshoesAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TallasController : ControllerBase
+    public class TallaController : ControllerBase
     {
-        private readonly TallasDAO daotalla;
+        private readonly TallasDAO talladao;
 
-        public TallasController(TallasDAO daoTalla)
+        public TallaController(TallasDAO talla)
         {
-            daotalla = daoTalla;
+            talladao = talla;
         }
 
-        //GET:Tallas
         [HttpGet("GetTallas")]
         public async Task<ActionResult<List<Tallas>>> GetTallas()
         {
-            var listado = await Task.Run(() => daotalla.GetTallas());
-            //
+            var listado = await Task.Run(() => talladao.GetTallas());
+
             return Ok(listado);
         }
+
+        [HttpPost("GrabarTalla")]
+        public async Task<ActionResult<string>> GrabarTalla([FromBody] Tallas obj)
+        {
+            string mensaje = await Task.Run(() => talladao.GrabarTalla(obj));
+            return Ok(mensaje);
+        }
+
+        [HttpPut("ActualizarTalla")]
+        public async Task<ActionResult<string>> ActualizarTalla([FromBody] Tallas obj)
+        {
+            string mensaje = await Task.Run(() => talladao.ActualizarTalla(obj));
+            return Ok(mensaje);
+        }
+
+        [HttpDelete("EliminarTalla/{id}")]
+        public async Task<ActionResult<string>> EliminarTalla(int id)
+        {
+            string mensaje = await Task.Run(() => talladao.EliminarTalla(id));
+            return Ok(mensaje);
+        }
+
+        [HttpDelete("RestaurarTalla/{id}")]
+        public async Task<ActionResult<string>> Resta(int id)
+        {
+            string mensaje = await Task.Run(() => talladao.RestaurarTalla(id));
+            return Ok(mensaje);
+        }
+
+
+
     }
 }
